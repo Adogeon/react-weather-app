@@ -18,15 +18,17 @@ export default async function (reg: Request, context: Context) {
         const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`);
         const data = await response.json();
 
-        return {
+        console.log(data)
+
+        return Response.json({
             statusCode: 200,
-            body: JSON.stringify(data),
-        };
+            data,
+        });
     } catch (error) {
-        return {
+        return Response.json({
             statusCode: 500,
             body: JSON.stringify({ msg: 'Failed to fetch weather data', error }),
-        };
+        });
     }
 }
 
