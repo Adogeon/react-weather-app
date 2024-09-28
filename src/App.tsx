@@ -2,37 +2,98 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { type SyntheticEvent, useState } from "react";
 import "./App.css";
-interface rawAPIResult {
+
+import CurrentCard from "./components/CurrentCard";
+import ForecastCard from "./components/ForecastCard";
+import HourlyForecastCard from "./components/HourlyForecastCard";
+
+interface weatherCondition {
+  text: string;
+  icon: string;
+}
+
+interface tempAndConditions {
+  temp_c: string;
+  temp_f: string;
+  feelslike_c: string;
+  feelslike_f: string;
+  condition: weatherCondition;
+}
+
+interface rawAPIError {
+  error: {
+    code: string;
+    message: string;
+  };
+}
+
+interface rawAPISuccess {
   location: {
     name: string;
     region: string;
     country: string;
   };
-  current: {
-    temp_c: string;
-    temp_f: string;
-    condition: {
-      text: string;
-      icon: string;
-    };
-    feelslike_c: string;
-    feelslike_f: string;
+  current: tempAndConditions & {
+    last_updated: string;
+  };
+  forecast: {
+    forecastday: [
+      {
+        date: string;
+        day: {
+          maxtemp_c: string;
+          maxtemp_f: string;
+          mintemp_c: string;
+          mintemp_f: string;
+          daily_chance_of_rain: string;
+          avghumidity: string;
+          condition: weatherCondition;
+        };
+        hour: [
+          tempAndConditions & {
+            time: string;
+          }
+        ];
+      }
+    ];
   };
 }
 
 interface fetchRequestResult {
   status: number;
-  data: rawAPIResult;
+  data: rawAPISuccess | rawAPIError;
 }
 
-function App() {
-  const [weather, setWeather] = useState<rawAPIResult>({} as rawAPIResult);
-  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
+const useFetchWeatherData = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFinished, setIsFinished] = useState<boolean>(false);
+  const [weather, setWeather] = useState<rawAPISuccess>({} as rawAPISuccess);
+  const [error, setError] = useState<rawAPIError | null>(null);
+
+  const fetchData = async () => {
+    setIsFinished(false);
+    setIsLoading(true);
     const fetchCall = await fetch(`./weather/london`);
-    const result = (await fetchCall.json()) as fetchRequestResult;
-    console.log(result.data);
-    setWeather(result.data);
+    const fetchResult = (await fetchCall.json()) as fetchRequestResult;
+    if ("error" in fetchResult.data) {
+      setError(fetchResult.data);
+    } else {
+      setWeather(fetchResult.data);
+    }
+    setIsLoading(false);
+    setIsFinished(true);
+  };
+
+  return { isLoading, isFinished, weather, error, fetchData };
+};
+
+function App() {
+  const { isLoading, isFinished, weather, error, fetchData } =
+    useFetchWeatherData();
+
+  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchData();
   };
 
   return (
@@ -49,28 +110,53 @@ function App() {
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="city-query" />
       </form>
-      {weather.location !== undefined ? (
+      {isLoading ? (
+        <div>Loading ...</div>
+      ) : isFinished ? (
         <div id="result">
-          <section id="location">
-            <div>{weather.location.name}</div>
-            <div>{weather.location.region}</div>
-            <div>{weather.location.country}</div>
-          </section>
-          <section id="current">
-            <div>
-              <img
-                src={weather.current.condition.icon}
-                alt={`${weather.current.condition.text}-icon`}
-              />
-            </div>
-            <div>{weather.current.condition.text}</div>
-            <div>{weather.current.temp_c}</div>
-            <div>{weather.current.feelslike_c}</div>
-          </section>
+          {error ? (
+            <section id="error">
+              <div>{error.error.message}</div>
+            </section>
+          ) : (
+            <>
+              <section id="location">
+                <div>{weather.location.name}</div>
+                <div>{weather.location.region}</div>
+                <div>{weather.location.country}</div>
+              </section>
+              <CurrentCard data={weather.current} />
+              <section id="forecast">
+                {weather.forecast.forecastday.map((forecastday) => (
+                  <div key={forecastday.date}>
+                    <ForecastCard
+                      date={forecastday.date}
+                      icon={forecastday.day.condition.icon}
+                      conditionText={forecastday.day.condition.text}
+                      mintemp_c={forecastday.day.mintemp_c}
+                      maxtemp_c={forecastday.day.maxtemp_c}
+                      avghumidity={forecastday.day.avghumidity}
+                      dailyChanceOfRain={forecastday.day.daily_chance_of_rain}
+                    />
+                    <section id="hourly-forecast">
+                      {forecastday.hour.map((forcasthour) => (
+                        <HourlyForecastCard
+                          key={forcasthour.time}
+                          time={forcasthour.time}
+                          icon={forcasthour.condition.icon}
+                          conditionText={forcasthour.condition.text}
+                          temp_c={forcasthour.temp_c}
+                          feelslike_c={forcasthour.feelslike_c}
+                        />
+                      ))}
+                    </section>
+                  </div>
+                ))}
+              </section>
+            </>
+          )}
         </div>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </>
   );
 }

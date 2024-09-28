@@ -1,0 +1,42 @@
+.current {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #2e2e2e;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #cccccc;
+}
+
+.icon-container {
+  flex: 1;
+}
+
+.icon-container img {
+  width: 80px;
+  height: 80px;
+}
+
+.weather-info {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.weather-info div {
+  font-size: 1.2rem;
+  color: #f0f0f0;
+}
+
+.temperature {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ffcc00;
+}
+
+.feels-like {
+  font-size: 1rem;
+  color: #cccccc;
+}
