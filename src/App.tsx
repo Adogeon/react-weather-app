@@ -5,8 +5,7 @@ import "./App.css";
 
 import CurrentCard from "./components/CurrentCard";
 import HourlyForcastCard from "./components/HourlyForecastCard";
-// import ForecastCard from "./components/ForecastCard";
-// import HourlyForecastCard from "./components/HourlyForecastCard";
+import ForecastCard from "./components/ForecastCard";
 
 interface weatherCondition {
   text: string;
@@ -138,32 +137,20 @@ function App() {
                         setExpandedDay(expandedDay === index ? null : index)
                       }
                     >
-                      <span>{forecastday.date}</span>
-                      <span>{forecastday.day.condition.text}</span>
+                      <ForecastCard
+                        date={forecastday.date}
+                        condition={forecastday.day.condition}
+                        mintemp_c={forecastday.day.mintemp_c}
+                        maxtemp_c={forecastday.day.maxtemp_c}
+                        avghumidity={forecastday.day.avghumidity}
+                        chance_of_rain={forecastday.day.daily_chance_of_rain}
+                      />
                     </div>
                     <div
                       className={`accordion-content ${
                         expandedDay === index ? "show" : ""
                       }`}
                     >
-                      <div className="daily-forecast-card">
-                        <div>{forecastday.date}</div>
-                        <div>
-                          <img
-                            src={forecastday.day.condition.icon}
-                            alt={`${forecastday.day.condition.text}-icon`}
-                          />
-                        </div>
-                        <div>{forecastday.day.condition.text}</div>
-                        <div>Min Temp: {forecastday.day.mintemp_c}°C</div>
-                        <div>Max Temp: {forecastday.day.maxtemp_c}°C</div>
-                        <div>Avg Humidity: {forecastday.day.avghumidity}%</div>
-                        <div>
-                          Chance of Rain: {forecastday.day.daily_chance_of_rain}
-                          %
-                        </div>
-                      </div>
-
                       <div className="hourly-forecast">
                         {forecastday.hour.map((forecasthour) => (
                           <HourlyForcastCard
