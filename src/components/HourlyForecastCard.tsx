@@ -1,4 +1,4 @@
-import styles from "./ForecastCard.module.css";
+import styles from "./HourlyForecastCard.module.css";
 interface HourlyForcastCardProps {
   time: string;
   condition: {
@@ -13,8 +13,9 @@ const HourlyForcastCard = ({
   condition,
   temp_c,
 }: HourlyForcastCardProps) => {
+  time = time.split(" ")[1];
   return (
-    <div className={styles["hourly-forcast-card"]}>
+    <div className={styles["hourly-card"]}>
       <div>{time}</div>
       <div>
         <img src={condition.icon} alt={`${condition.text}-icon`} />

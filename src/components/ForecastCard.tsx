@@ -21,16 +21,21 @@ const ForecastCard = ({
   chance_of_rain,
 }: ForecastCardProps) => {
   return (
-    <div className={styles["daily-forcast-card"]}>
-      <div>{date}</div>
+    <div className={styles["daily-forecast-card"]}>
       <div>
-        <img src={condition.icon} alt={`${condition.text}-icon`} />
+        <div>{date}</div>
+        <div>
+          <img src={condition.icon} alt={`${condition.text}-icon`} />
+        </div>
+        <div>{condition.text}</div>
       </div>
-      <div>{condition.text}</div>
-      <div>Min Temp: {mintemp_c}°C</div>
-      <div>Max Temp: {maxtemp_c}°C</div>
-      <div>Avg Humidity: {avghumidity}%</div>
-      <div>Chance of Rain: {chance_of_rain}%</div>
+      <div>
+        <div>
+          {mintemp_c}°C - {maxtemp_c}°C
+        </div>
+        <div>Humidity: {avghumidity}%</div>
+        <div>Chance of Rain: {chance_of_rain}%</div>
+      </div>
     </div>
   );
 };

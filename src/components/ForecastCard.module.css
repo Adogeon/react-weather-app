@@ -1,12 +1,10 @@
 .daily-forecast-card {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #1e1e1e;
-  border-radius: 8px;
-  border: 1px solid #cccccc;
-  margin-bottom: 15px;
+ 
 }
 
 .daily-forecast-card img {

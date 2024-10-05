@@ -1,18 +1,17 @@
-.hourly-forecast-card {
+.hourly-card {
   flex: 0 0 100px;
-  background-color: #2e2e2e;
-  padding: 15px;
+  padding: 15px 0px;
   border-radius: 10px;
   border: 1px solid #cccccc;
   text-align: center;
   color: #e0e0e0;
 }
 
-.hourly-forecast-card img {
+.hourly-card img {
   width: 40px;
   height: 40px;
 }
 
-.hourly-forecast-card div {
+.hourly-card div {
   margin-bottom: 5px;
 }
