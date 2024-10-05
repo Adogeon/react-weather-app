@@ -2,34 +2,36 @@ import styles from "./ForecastCard.module.css";
 
 interface ForecastCardProps {
   date: string;
-  icon: string;
-  conditionText: string;
+  condition: {
+    icon: string;
+    text: string;
+  };
   mintemp_c: string;
   maxtemp_c: string;
   avghumidity: string;
-  dailyChanceOfRain: string;
+  chance_of_rain: string;
 }
 
-const ForecastCard = (props: ForecastCardProps) => {
+const ForecastCard = ({
+  date,
+  condition,
+  mintemp_c,
+  maxtemp_c,
+  avghumidity,
+  chance_of_rain,
+}: ForecastCardProps) => {
   return (
-    <section className={styles["forecast-card"]}>
-      <div className={styles["forecast-date"]}>{props.date}</div>
-      <div className={styles["forecast-content"]}>
-        <img
-          src={props.icon}
-          alt={`${props.conditionText}-icon`}
-          className={styles["condition-icon"]}
-        />
-        <div className={styles["condition-text"]}>{props.conditionText}</div>
-        <div className={styles["temperature"]}>
-          {props.mintemp_c}°C - {props.maxtemp_c}°C
-        </div>
-        <div className={styles["humidity"]}>Humidity: {props.avghumidity}%</div>
-        <div className={styles["chance-of-rain"]}>
-          Chance of Rain: {props.dailyChanceOfRain}%
-        </div>
+    <div className={styles["daily-forcast-card"]}>
+      <div>{date}</div>
+      <div>
+        <img src={condition.icon} alt={`${condition.text}-icon`} />
       </div>
-    </section>
+      <div>{condition.text}</div>
+      <div>Min Temp: {mintemp_c}°C</div>
+      <div>Max Temp: {maxtemp_c}°C</div>
+      <div>Avg Humidity: {avghumidity}%</div>
+      <div>Chance of Rain: {chance_of_rain}%</div>
+    </div>
   );
 };
 

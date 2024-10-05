@@ -40,3 +40,64 @@
 .read-the-docs {
   color: #888;
 }
+
+.accordion {
+  background-color: #2e2e2e;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: #e0e0e0;
+}
+
+.accordion-header {
+  padding: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  border-bottom: 1px solid #cccccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e1e1e;
+}
+
+.accordion-header:hover {
+  background-color: #383838;
+}
+
+.accordion-content {
+  padding: 10px;
+  display: none;
+  border-top: 1px solid #cccccc;
+}
+
+.accordion-content.show {
+  display: block;
+}
+
+/* Daily Forecast (Horizontal Card) */
+.daily-forecast-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  margin-bottom: 15px;
+}
+
+.daily-forecast-card img {
+  width: 50px;
+  height: 50px;
+}
+
+.daily-forecast-card div {
+  margin: 0 10px;
+}
+
+/* Hourly Forecast (Vertical Cards with Horizontal Scroll) */
+.hourly-forecast {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px 0;
+  gap: 15px;
+}

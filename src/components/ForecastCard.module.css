@@ -1,39 +1,20 @@
-.forecast-card {
-    background-color: #2e2e2e;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #cccccc;
-    margin-bottom: 20px;
-  }
-  
-  .forecast-date {
-    font-size: 1.2rem;
-    color: #f0f0f0;
-    margin-bottom: 10px;
-  }
-  
-  .forecast-content {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .condition-icon {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .condition-text, .temperature, .humidity, .chance-of-rain {
-    font-size: 1rem;
-    color: #e0e0e0;
-  }
-  
-  .temperature {
-    font-weight: bold;
-  }
-  
-  .humidity, .chance-of-rain {
-    font-size: 0.9rem;
-    color: #cccccc;
-  }
+.daily-forecast-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  margin-bottom: 15px;
+}
+
+.daily-forecast-card img {
+  width: 50px;
+  height: 50px;
+}
+
+.daily-forecast-card div {
+  margin: 0 10px;
+}
   

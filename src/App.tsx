@@ -4,8 +4,9 @@ import { type SyntheticEvent, useState } from "react";
 import "./App.css";
 
 import CurrentCard from "./components/CurrentCard";
-import ForecastCard from "./components/ForecastCard";
-import HourlyForecastCard from "./components/HourlyForecastCard";
+import HourlyForcastCard from "./components/HourlyForecastCard";
+// import ForecastCard from "./components/ForecastCard";
+// import HourlyForecastCard from "./components/HourlyForecastCard";
 
 interface weatherCondition {
   text: string;
@@ -91,6 +92,8 @@ function App() {
   const { isLoading, isFinished, weather, error, fetchData } =
     useFetchWeatherData();
 
+  const [expandedDay, setExpandedDay] = useState<number | null>(null);
+
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchData();
@@ -127,29 +130,51 @@ function App() {
               </section>
               <CurrentCard data={weather.current} />
               <section id="forecast">
-                {weather.forecast.forecastday.map((forecastday) => (
-                  <div key={forecastday.date}>
-                    <ForecastCard
-                      date={forecastday.date}
-                      icon={forecastday.day.condition.icon}
-                      conditionText={forecastday.day.condition.text}
-                      mintemp_c={forecastday.day.mintemp_c}
-                      maxtemp_c={forecastday.day.maxtemp_c}
-                      avghumidity={forecastday.day.avghumidity}
-                      dailyChanceOfRain={forecastday.day.daily_chance_of_rain}
-                    />
-                    <section id="hourly-forecast">
-                      {forecastday.hour.map((forcasthour) => (
-                        <HourlyForecastCard
-                          key={forcasthour.time}
-                          time={forcasthour.time}
-                          icon={forcasthour.condition.icon}
-                          conditionText={forcasthour.condition.text}
-                          temp_c={forcasthour.temp_c}
-                          feelslike_c={forcasthour.feelslike_c}
-                        />
-                      ))}
-                    </section>
+                {weather.forecast.forecastday.map((forecastday, index) => (
+                  <div className="accordion" key={forecastday.date}>
+                    <div
+                      className="accordion-header"
+                      onClick={() =>
+                        setExpandedDay(expandedDay === index ? null : index)
+                      }
+                    >
+                      <span>{forecastday.date}</span>
+                      <span>{forecastday.day.condition.text}</span>
+                    </div>
+                    <div
+                      className={`accordion-content ${
+                        expandedDay === index ? "show" : ""
+                      }`}
+                    >
+                      <div className="daily-forecast-card">
+                        <div>{forecastday.date}</div>
+                        <div>
+                          <img
+                            src={forecastday.day.condition.icon}
+                            alt={`${forecastday.day.condition.text}-icon`}
+                          />
+                        </div>
+                        <div>{forecastday.day.condition.text}</div>
+                        <div>Min Temp: {forecastday.day.mintemp_c}°C</div>
+                        <div>Max Temp: {forecastday.day.maxtemp_c}°C</div>
+                        <div>Avg Humidity: {forecastday.day.avghumidity}%</div>
+                        <div>
+                          Chance of Rain: {forecastday.day.daily_chance_of_rain}
+                          %
+                        </div>
+                      </div>
+
+                      <div className="hourly-forecast">
+                        {forecastday.hour.map((forecasthour) => (
+                          <HourlyForcastCard
+                            key={forecasthour.time}
+                            time={forecasthour.time}
+                            condition={forecasthour.condition}
+                            temp_c={forecasthour.temp_c}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </section>

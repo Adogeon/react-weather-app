@@ -1,29 +1,27 @@
-import styles from "./HourlyForecastCard.module.css";
-
-interface HourlyForecastCardProps {
+import styles from "./ForecastCard.module.css";
+interface HourlyForcastCardProps {
   time: string;
-  icon: string;
-  conditionText: string;
+  condition: {
+    icon: string;
+    text: string;
+  };
   temp_c: string;
-  feelslike_c: string;
 }
 
-const HourlyForecastCard = (props: HourlyForecastCardProps) => {
+const HourlyForcastCard = ({
+  time,
+  condition,
+  temp_c,
+}: HourlyForcastCardProps) => {
   return (
-    <div className={styles["hourly-forecast-card"]}>
-      <div className={styles["hour"]}>{props.time}</div>
-      <img
-        src={props.icon}
-        alt={`${props.conditionText}-icon`}
-        className={styles["condition-icon"]}
-      />
-      <div className={styles["condition-text"]}>{props.conditionText}</div>
-      <div className={styles["temperature"]}>{props.temp_c}°C</div>
-      <div className={styles["feels-like"]}>
-        Feels Like: {props.feelslike_c}°C
+    <div className={styles["hourly-forcast-card"]}>
+      <div>{time}</div>
+      <div>
+        <img src={condition.icon} alt={`${condition.text}-icon`} />
       </div>
+      <div>{temp_c}°C</div>
     </div>
   );
 };
 
-export default HourlyForecastCard;
+export default HourlyForcastCard;
