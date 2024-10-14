@@ -6,6 +6,7 @@ import "./App.css";
 import CurrentCard from "./components/CurrentCard";
 import HourlyForcastCard from "./components/HourlyForecastCard";
 import ForecastCard from "./components/ForecastCard";
+import useInput from "./hooks/useInput";
 
 interface weatherCondition {
   text: string;
@@ -91,10 +92,13 @@ function App() {
   const { isLoading, isFinished, weather, error, fetchData } =
     useFetchWeatherData();
 
+  const city = useInput("");
+
   const [expandedDay, setExpandedDay] = useState<number | null>(null);
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(city.value);
     fetchData();
   };
 
@@ -110,7 +114,12 @@ function App() {
       </div>
       <h1>Weather App</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="city-query" />
+        <input
+          type="text"
+          placeholder="city-query"
+          value={city.value}
+          onChange={city.handleChange}
+        />
       </form>
       {isLoading ? (
         <div>Loading ...</div>
