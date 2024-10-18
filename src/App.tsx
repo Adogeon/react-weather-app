@@ -71,10 +71,10 @@ const useFetchWeatherData = () => {
   const [weather, setWeather] = useState<rawAPISuccess>({} as rawAPISuccess);
   const [error, setError] = useState<rawAPIError | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = async (location: string) => {
     setIsFinished(false);
     setIsLoading(true);
-    const fetchCall = await fetch(`./weather/london`);
+    const fetchCall = await fetch(`./weather/${location}`);
     const fetchResult = (await fetchCall.json()) as fetchRequestResult;
     if ("error" in fetchResult.data) {
       setError(fetchResult.data);
@@ -99,7 +99,7 @@ function App() {
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(city.value);
-    fetchData();
+    fetchData(city.value);
   };
 
   return (
