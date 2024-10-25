@@ -13,56 +13,63 @@ export interface Cache<T> {
   set(key: string, value: T): void;
 }
 
+type FetchState<TSuccess, TError> =
+  | { status: "idle" | "loading"; data: null; error: null }
+  | { status: "success"; data: TSuccess; error: null }
+  | { status: "error"; data: null; error: TError };
+
 const useFetchData = <TSuccess extends object, TError extends object>(
-  endpoint: string,
   cache?: Cache<TSuccess | TError>
 ) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFinished, setIsFinished] = useState<boolean>(false);
-  const [data, setData] = useState<TSuccess | null>(null);
-  const [error, setError] = useState<TError | null>(null);
+  const [state, setState] = useState<FetchState<TSuccess, TError>>({
+    status: "idle",
+    data: null,
+    error: null,
+  });
 
-  const fetchData = useCallback(async () => {
-    setIsFinished(false);
-    setIsLoading(true);
+  const fetchData = useCallback(
+    async (endpoint: string) => {
+      setState({ status: "loading", data: null, error: null });
 
-    if (cache && cache.get(endpoint)) {
-      const cachedData = cache.get(endpoint);
-      setData(cachedData as TSuccess);
-      setIsLoading(false);
-      setIsFinished(true);
-      return;
-    }
-    try {
-      const response = await fetch(endpoint);
-      const result: FetchRequestResult<TSuccess, TError> =
-        await response.json();
-
-      if ("error" in result.data) {
-        setError(result.data as TError);
-        setData(null);
-      } else {
-        setData(result.data as TSuccess);
-        setError(null);
-
-        if (cache) {
-          cache.set(endpoint, result.data);
-        }
+      const cachedData = cache?.get(endpoint) as TSuccess;
+      if (cachedData) {
+        setState({ status: "success", data: cachedData, error: null });
+        return;
       }
-    } catch (err) {
-      setError({
-        error: {
-          code: "500",
-          message: err instanceof Error ? err.message : "Unknown error",
-        },
-      } as TError);
-    } finally {
-      setIsLoading(false);
-      setIsFinished(true);
-    }
-  }, [endpoint, cache]);
 
-  return { isLoading, isFinished, data, error, fetchData };
+      try {
+        const response = await fetch(endpoint);
+        const result: FetchRequestResult<TSuccess, TError> =
+          await response.json();
+
+        if ("error" in result.data) {
+          throw result.data as TError;
+        } else {
+          setState({
+            status: "success",
+            data: result.data as TSuccess,
+            error: null,
+          });
+          cache?.set(endpoint, result.data);
+        }
+      } catch (err) {
+        setState({
+          status: "error",
+          data: null,
+          error:
+            err instanceof Error
+              ? ({ code: "500", message: err.message } as TError)
+              : (err as TError),
+        });
+      }
+    },
+    [cache]
+  );
+
+  return {
+    ...state,
+    fetchData,
+  };
 };
 
 export default useFetchData;

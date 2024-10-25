@@ -7,6 +7,7 @@ import CurrentCard from "./components/CurrentCard";
 import HourlyForcastCard from "./components/HourlyForecastCard";
 import ForecastCard from "./components/ForecastCard";
 import useInput from "./hooks/useInput";
+import useFetchData from "./hooks/useFetchData";
 
 interface weatherCondition {
   text: string;
@@ -60,37 +61,11 @@ interface rawAPISuccess {
   };
 }
 
-interface fetchRequestResult {
-  status: number;
-  data: rawAPISuccess | rawAPIError;
-}
-
-const useFetchWeatherData = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFinished, setIsFinished] = useState<boolean>(false);
-  const [weather, setWeather] = useState<rawAPISuccess>({} as rawAPISuccess);
-  const [error, setError] = useState<rawAPIError | null>(null);
-
-  const fetchData = async (location: string) => {
-    setIsFinished(false);
-    setIsLoading(true);
-    const fetchCall = await fetch(`./weather/${location}`);
-    const fetchResult = (await fetchCall.json()) as fetchRequestResult;
-    if ("error" in fetchResult.data) {
-      setError(fetchResult.data);
-    } else {
-      setWeather(fetchResult.data);
-    }
-    setIsLoading(false);
-    setIsFinished(true);
-  };
-
-  return { isLoading, isFinished, weather, error, fetchData };
-};
-
 function App() {
-  const { isLoading, isFinished, weather, error, fetchData } =
-    useFetchWeatherData();
+  const { status, data, error, fetchData } = useFetchData<
+    rawAPISuccess,
+    rawAPIError
+  >();
 
   const city = useInput("");
 
@@ -99,7 +74,7 @@ function App() {
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(city.value);
-    fetchData(city.value);
+    fetchData(`./weather/${city.value.trim()}`);
   };
 
   return (
@@ -121,24 +96,24 @@ function App() {
           onChange={city.handleChange}
         />
       </form>
-      {isLoading ? (
+      {status === "loading" ? (
         <div>Loading ...</div>
-      ) : isFinished ? (
+      ) : (
         <div id="result">
-          {error ? (
+          {status === "error" ? (
             <section id="error">
               <div>{error.error.message}</div>
             </section>
-          ) : (
+          ) : status === "success" ? (
             <>
               <section id="location">
-                <div>{weather.location.name}</div>
-                <div>{weather.location.region}</div>
-                <div>{weather.location.country}</div>
+                <div>{data.location.name}</div>
+                <div>{data.location.region}</div>
+                <div>{data.location.country}</div>
               </section>
-              <CurrentCard data={weather.current} />
+              <CurrentCard data={data.current} />
               <section id="forecast">
-                {weather.forecast.forecastday.map((forecastday, index) => (
+                {data.forecast.forecastday.map((forecastday, index) => (
                   <div className="accordion" key={forecastday.date}>
                     <div
                       className="accordion-header"
@@ -175,9 +150,9 @@ function App() {
                 ))}
               </section>
             </>
-          )}
+          ) : null}
         </div>
-      ) : null}
+      )}
     </>
   );
 }
