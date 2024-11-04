@@ -1,6 +1,6 @@
 export async function fetchCityForecast(city: string, apiKey: string) {
     if (!apiKey) {
-        throw new Error("Missing API Key");
+        throw new Error("Missing API key");
     }
 
     const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=3&aqi=no&alerts=no`);

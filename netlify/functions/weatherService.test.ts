@@ -10,7 +10,7 @@ describe("fetchWeather", () => {
 
         const data = await fetchCityForecast("London", API_KEY);
         expect(data).toEqual(mockWeatherData);
-        expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('http://api.weatherapi/com/v1/forecast.json?key=text-api-key&q=London'));
+        expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('http://api.weatherapi.com/v1/forecast.json?key=test-api-key&q=London&days=3&aqi=no&alerts=no'));
     });
 
     it("should throw an error if the API key is missing", async () => {
