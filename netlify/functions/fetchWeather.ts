@@ -4,8 +4,6 @@ import { Config, Context } from '@netlify/functions'
 
 dotenv.config();
 
-
-
 export default async function (reg: Request, context: Context) {
     const { city } = context.params;
     const API_KEY = process.env.WEATHER_API_KEY;
