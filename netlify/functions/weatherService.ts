@@ -1,4 +1,6 @@
-export async function fetchCityForecast(city: string, apiKey: string) {
+import fetch from "node-fetch";
+
+export async function fetchCityForecast(city: string, apiKey?: string) {
     if (!apiKey) {
         throw new Error("Missing API key");
     }
