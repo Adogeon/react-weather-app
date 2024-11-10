@@ -1,6 +1,7 @@
 .current {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  height: 50vh;
   justify-content: space-around;
   align-items: center;
   background-color: #2e2e2e;

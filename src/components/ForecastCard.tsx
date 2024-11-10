@@ -1,40 +1,25 @@
 import styles from "./ForecastCard.module.css";
+import type { DailyForecastData } from "../types/weather";
 
-interface ForecastCardProps {
-  date: string;
-  condition: {
-    icon: string;
-    text: string;
-  };
-  mintemp_c: string;
-  maxtemp_c: string;
-  avghumidity: string;
-  chance_of_rain: string;
-}
-
-const ForecastCard = ({
-  date,
-  condition,
-  mintemp_c,
-  maxtemp_c,
-  avghumidity,
-  chance_of_rain,
-}: ForecastCardProps) => {
+const ForecastCard = ({ data }: { data: DailyForecastData }) => {
   return (
     <div className={styles["daily-forecast-card"]}>
       <div>
-        <div>{date}</div>
+        <div>{data.date}</div>
         <div>
-          <img src={condition.icon} alt={`${condition.text}-icon`} />
+          <img
+            src={data.day.condition.icon}
+            alt={`${data.day.condition.text}-icon`}
+          />
         </div>
-        <div>{condition.text}</div>
+        <div>{data.day.condition.text}</div>
       </div>
       <div>
         <div>
-          {mintemp_c}°C - {maxtemp_c}°C
+          {data.day.mintemp_c}°C - {data.day.maxtemp_c}°C
         </div>
-        <div>Humidity: {avghumidity}%</div>
-        <div>Chance of Rain: {chance_of_rain}%</div>
+        <div>Humidity: {data.day.avghumidity}%</div>
+        <div>Chance of Rain: {data.day.daily_chance_of_rain}%</div>
       </div>
     </div>
   );
