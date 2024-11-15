@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HourlyForcastCard should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="_hourly-card_0df995"
+  >
+    <div>
+      14 PM
+    </div>
+    <div>
+      <img
+        alt="test-icon"
+        src="/64x64/test"
+      />
+    </div>
+    <div>
+      14.3°C
+    </div>
+  </div>
+</DocumentFragment>
+`;

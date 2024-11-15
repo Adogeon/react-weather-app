@@ -30,7 +30,7 @@ export interface DailyForecastData {
     day: DailyForecastWeather
 }
 
-interface HourlyForecast extends TempAndConditions {
+export interface HourlyForecast extends TempAndConditions {
     time: string;
 }
 

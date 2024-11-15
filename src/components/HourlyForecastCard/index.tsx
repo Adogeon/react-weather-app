@@ -1,27 +1,16 @@
 import styles from "./HourlyForecastCard.module.css";
 import toHourDisplayText from "../../utils/toHourDisplayText";
-interface HourlyForcastCardProps {
-  time: string;
-  condition: {
-    icon: string;
-    text: string;
-  };
-  temp_c: string;
-}
 
-const HourlyForcastCard = ({
-  time,
-  condition,
-  temp_c,
-}: HourlyForcastCardProps) => {
-  time = time.split(" ")[1];
+import type { HourlyForecast } from "../../types/weather";
+
+const HourlyForcastCard = ({ data }: { data: HourlyForecast }) => {
   return (
     <div className={styles["hourly-card"]}>
-      <div>{toHourDisplayText(time)}</div>
+      <div>{toHourDisplayText(data.time.split(" ")[1])}</div>
       <div>
-        <img src={condition.icon} alt={`${condition.text}-icon`} />
+        <img src={data.condition.icon} alt={`${data.condition.text}-icon`} />
       </div>
-      <div>{temp_c}°C</div>
+      <div>{data.temp_c}°C</div>
     </div>
   );
 };

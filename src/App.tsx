@@ -71,9 +71,7 @@ function App() {
                   (forecasthour) => (
                     <HourlyForecastCard
                       key={forecasthour.time}
-                      time={forecasthour.time}
-                      condition={forecasthour.condition}
-                      temp_c={forecasthour.temp_c}
+                      data={forecasthour}
                     />
                   )
                 )}
