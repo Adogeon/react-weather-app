@@ -33,6 +33,12 @@ export default async function (reg: Request, context: Context) {
             data,
         });
     } catch (error) {
+        if (typeof error === 'object' && "status" in error) {
+            return Response.json({
+                statuscode: error.status,
+                body: JSON.stringify({ msg: error.message })
+            })
+        }
         return Response.json({
             statusCode: 500,
             body: JSON.stringify({ msg: error.message }),
