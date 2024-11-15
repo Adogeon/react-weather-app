@@ -1,5 +1,5 @@
 import styles from "./ForecastCard.module.css";
-import type { DailyForecastData } from "../types/weather";
+import type { DailyForecastData } from "../../types/weather";
 
 const ForecastCard = ({ data }: { data: DailyForecastData }) => {
   return (

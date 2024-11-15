@@ -1,0 +1,8 @@
+.summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin:auto;
+    width: 100%;
+}
+

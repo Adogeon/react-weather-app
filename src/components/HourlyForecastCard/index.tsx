@@ -1,4 +1,5 @@
 import styles from "./HourlyForecastCard.module.css";
+import toHourDisplayText from "../../utils/toHourDisplayText";
 interface HourlyForcastCardProps {
   time: string;
   condition: {
@@ -16,7 +17,7 @@ const HourlyForcastCard = ({
   time = time.split(" ")[1];
   return (
     <div className={styles["hourly-card"]}>
-      <div>{time}</div>
+      <div>{toHourDisplayText(time)}</div>
       <div>
         <img src={condition.icon} alt={`${condition.text}-icon`} />
       </div>

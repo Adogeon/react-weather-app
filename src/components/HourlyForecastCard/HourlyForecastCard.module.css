@@ -1,15 +1,17 @@
 .hourly-card {
-  flex: 0 0 100px;
+  display: flex;
   padding: 15px 0px;
   border-radius: 10px;
   border: 1px solid #cccccc;
   text-align: center;
   color: #e0e0e0;
+  justify-content: space-around;
+  align-items: center;;
 }
 
 .hourly-card img {
-  width: 40px;
-  height: 40px;
+  width:4rem;
+  height: 4rem;
 }
 
 .hourly-card div {

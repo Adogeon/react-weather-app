@@ -1,8 +1,8 @@
 .current {
+  flex: 0 1 auto;
   display: flex;
-  flex-direction: column;
-  height: 50vh;
   justify-content: space-around;
+  flex-wrap:wrap;
   align-items: center;
   background-color: #2e2e2e;
   padding: 20px;
@@ -15,8 +15,8 @@
 }
 
 .icon-container img {
-  width: 80px;
-  height: 80px;
+  width: 7.5rem;
+  height: 7.5rem;
 }
 
 .weather-info {

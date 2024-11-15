@@ -1,5 +1,5 @@
 import styles from "./CurrentCard.module.css";
-import type { CurrentWeather } from "../types/weather";
+import type { CurrentWeather } from "../../types/weather";
 
 const CurrentCard = ({ data }: { data: CurrentWeather }) => {
   const bigIconSrc = data.condition.icon.replace(/\/64x64\//, "/128x128/");

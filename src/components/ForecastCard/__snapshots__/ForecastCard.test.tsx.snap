@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Forecast Card should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="_daily-forecast-card_982c90"
+  >
+    <div>
+      <div>
+        2024-11-15
+      </div>
+      <div>
+        <img
+          alt="test-icon"
+          src="/64x64/test"
+        />
+      </div>
+      <div>
+        test
+      </div>
+    </div>
+    <div>
+      <div>
+        12.8°C - 14.5°C
+      </div>
+      <div>
+        Humidity: 80%
+      </div>
+      <div>
+        Chance of Rain: 0%
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

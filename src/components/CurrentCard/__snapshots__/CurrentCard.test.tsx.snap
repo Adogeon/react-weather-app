@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`The CurrentCard should render correctly 1`] = `
+<DocumentFragment>
+  <section
+    class="_current_8601b2"
+    id="current"
+  >
+    <div
+      class="_icon-container_8601b2"
+    >
+      <img
+        alt="test text-icon"
+        src="/128x128/test"
+      />
+    </div>
+    <div
+      class="_weather-info_8601b2"
+    >
+      <div>
+        test text
+      </div>
+      <div
+        class="_temperature_8601b2"
+      >
+        20°C
+      </div>
+      <div
+        class="_feels-like_8601b2"
+      >
+        Feels like 10°C
+      </div>
+    </div>
+  </section>
+</DocumentFragment>
+`;

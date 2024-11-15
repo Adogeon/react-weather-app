@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width: 100%;
 }
 
 @media (orientation: portrait) {
@@ -55,9 +56,14 @@
 /* Hourly Forecast (Vertical Cards with Horizontal Scroll) */
 .hourly-forecast {
   display: flex;
-  overflow-x: auto;
+  flex-flow: column;
+  overflow-y: auto;
   padding: 10px 0;
   gap: 15px;
   width: 100%;
   max-width: calc(80rem - 20px);
+}
+
+#result {
+  width: 100%;
 }
