@@ -6,6 +6,7 @@ import useInput from "./hooks/useInput";
 import useFetchData from "./hooks/useFetchData";
 import type { rawAPIError, rawAPISuccess } from "./types/api";
 import SummaryArea from "./components/SummaryArea";
+import ErrorCard from "./components/ErrorCard";
 
 enum ForecastTab {
   Today = 0,
@@ -44,9 +45,10 @@ function App() {
       ) : (
         <div id="result">
           {status === "error" ? (
-            <div>{error?.error.message}</div>
+            <ErrorCard data={error} />
           ) : status === "success" ? (
             <>
+              <h2>{`${data.location.name}, ${data.location.region}, ${data.location.country}`}</h2>
               <SummaryArea
                 forecast={data.forecast.forecastday[activeDayForecastIndex]}
                 current={

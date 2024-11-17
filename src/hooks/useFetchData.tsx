@@ -42,7 +42,7 @@ const useFetchData = <TSuccess extends object, TError extends object>(
         const result: FetchRequestResult<TSuccess, TError> =
           await response.json();
 
-        if ("error" in result.data) {
+        if ("code" in result.data) {
           throw result.data as TError;
         } else {
           setState({

@@ -36,12 +36,18 @@ export default async function (reg: Request, context: Context) {
         if (typeof error === 'object' && "status" in error) {
             return Response.json({
                 statuscode: error.status,
-                body: JSON.stringify({ msg: error.message })
+                data: {
+                    code: error.status,
+                    message: error.message,
+                }
             })
         }
         return Response.json({
             statusCode: 500,
-            body: JSON.stringify({ msg: error.message }),
+            data: {
+                code: 500,
+                message: error.message
+            },
         });
     }
 }
