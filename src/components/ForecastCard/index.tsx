@@ -1,11 +1,12 @@
 import styles from "./ForecastCard.module.css";
 import type { DailyForecastData } from "../../types/weather";
+import toDateDisplayText from "../../utils/toDateDisplayText";
 
 const ForecastCard = ({ data }: { data: DailyForecastData }) => {
   return (
     <div className={styles["daily-forecast-card"]}>
       <div>
-        <div>{data.date}</div>
+        <div>{toDateDisplayText(data.date)}</div>
         <div>
           <img
             src={data.day.condition.icon}
