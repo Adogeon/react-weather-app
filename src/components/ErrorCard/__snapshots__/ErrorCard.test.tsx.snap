@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ErrorCard should render correctly 1`] = `
+<DocumentFragment>
+  <section
+    class="_error_286e5e"
+  >
+    <h1>
+      500
+    </h1>
+    <p>
+      Failed to fetch weather data
+    </p>
+  </section>
+</DocumentFragment>
+`;

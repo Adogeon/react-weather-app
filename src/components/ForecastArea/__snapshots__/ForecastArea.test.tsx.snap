@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ForecastArea should render correctly 1`] = `
+<DocumentFragment>
+  <section
+    id="forecast"
+  >
+    <div
+      class="_hourly-card_0df995"
+    >
+      <div>
+        14 PM
+      </div>
+      <div>
+        <img
+          alt="test-condition-icon"
+          src="/64x64/test-iocn"
+        />
+      </div>
+      <div>
+        17°C
+      </div>
+    </div>
+    <div
+      class="_hourly-card_0df995"
+    >
+      <div>
+        15 PM
+      </div>
+      <div>
+        <img
+          alt="test-condition-icon"
+          src="/64x64/test-iocn"
+        />
+      </div>
+      <div>
+        17°C
+      </div>
+    </div>
+  </section>
+</DocumentFragment>
+`;

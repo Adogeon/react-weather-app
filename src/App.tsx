@@ -7,6 +7,7 @@ import useFetchData from "./hooks/useFetchData";
 import type { rawAPIError, rawAPISuccess } from "./types/api";
 import SummaryArea from "./components/SummaryArea";
 import ErrorCard from "./components/ErrorCard";
+import ForecastArea from "./components/ForecastArea";
 
 enum ForecastTab {
   Today = 0,
@@ -68,16 +69,12 @@ function App() {
                 </button>
               </div>
 
-              <section className="hourly-forecast">
-                {data.forecast.forecastday[activeDayForecastIndex]?.hour.map(
-                  (forecasthour) => (
-                    <HourlyForecastCard
-                      key={forecasthour.time}
-                      data={forecasthour}
-                    />
-                  )
-                )}
-              </section>
+              <ForecastArea
+                data={{
+                  currentTime: data.current.last_updated,
+                  hour: data.forecast.forecastday[activeDayForecastIndex].hour,
+                }}
+              />
             </>
           ) : null}
         </div>
