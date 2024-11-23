@@ -1,7 +1,6 @@
 import { type SyntheticEvent, useState } from "react";
 import "./App.css";
 
-import HourlyForecastCard from "./components/HourlyForecastCard";
 import useInput from "./hooks/useInput";
 import useFetchData from "./hooks/useFetchData";
 import type { rawAPIError, rawAPISuccess } from "./types/api";
