@@ -3,18 +3,18 @@ import { vi, describe, it, expect, beforeEach } from 'vitest';
 import * as nodeFetch from "node-fetch";
 import { Response } from "node-fetch";
 
-vi.mock("node-fetch", async () => {
-    const actual: typeof nodeFetch = await vi.importActual("node-fetch");
-
-    return {
-        ...actual,
-        default: vi.fn()
-    }
-})
-
-const fetch = vi.mocked(nodeFetch.default);
 
 describe("fetchWeather", () => {
+    vi.mock("node-fetch", async () => {
+        const actual: typeof nodeFetch = await vi.importActual("node-fetch");
+
+        return {
+            ...actual,
+            default: vi.fn()
+        }
+    })
+
+    const fetch = vi.mocked(nodeFetch.default);
     const API_KEY = 'test-api-key';
     beforeEach(() => {
         fetch.mockClear();
@@ -33,7 +33,8 @@ describe("fetchWeather", () => {
     });
 
     it("should throw an error if the API request failes", async () => {
-        fetch.mockImplementationOnce(async () => new Response("Bad request", { status: 501 }));
+        const mockErrorReturn = { error: { code: 501, message: "Failed to fetch weather data" } }
+        fetch.mockImplementationOnce(async () => new Response(JSON.stringify(mockErrorReturn), { status: 501 }));
 
         await expect(fetchCityForecast('London', API_KEY)).rejects.toThrow("Failed to fetch weather data");
     })
