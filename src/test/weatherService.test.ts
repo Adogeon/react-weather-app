@@ -1,4 +1,4 @@
-import { fetchCityForecast } from "./weatherService"
+import { fetchCityForecast } from "../../netlify/functions/weatherService"
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import * as nodeFetch from "node-fetch";
 import { Response } from "node-fetch";
